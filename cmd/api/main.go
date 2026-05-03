@@ -5,10 +5,11 @@ import (
 	"os"
 
 	"github.com/alcb1310/bca-proto/internal/server"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 func main() {
-	var port = "8080"
+	port := os.Getenv("PORT")
 	r, err := server.New(port)
 	if err != nil {
 		slog.Error("failed to start server", "err", err)
