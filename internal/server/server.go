@@ -7,13 +7,13 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-type server struct {
-	port uint16
+type Server struct {
+	Port uint16
 }
 
 func New(port string) (http.Server, error) {
-	s := server{}
-	portInt, err := fmt.Sscanf(port, "%d", &s.port)
+	s := Server{}
+	portInt, err := fmt.Sscanf(port, "%d", &s.Port)
 	if err != nil {
 		return http.Server{}, err
 	}
@@ -22,12 +22,12 @@ func New(port string) (http.Server, error) {
 	}
 
 	return http.Server{
-		Addr:    fmt.Sprintf(":%d", s.port),
-		Handler: s.routes(),
+		Addr:    fmt.Sprintf(":%d", s.Port),
+		Handler: s.Router(),
 	}, nil
 }
 
-func (s *server) routes() http.Handler {
+func (s *Server) Router() http.Handler {
 	r := chi.NewRouter()
 
 	r.Get("/", s.homeRoute)
