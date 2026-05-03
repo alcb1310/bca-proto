@@ -30,5 +30,11 @@ func New(port string) (http.Server, error) {
 func (s *server) routes() http.Handler {
 	r := chi.NewRouter()
 
+	r.Get("/", s.homeRoute)
+
 	return r
+}
+
+func (s *server) homeRoute(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("hello"))
 }
