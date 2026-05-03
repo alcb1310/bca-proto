@@ -30,11 +30,12 @@ func New(port string) (http.Server, error) {
 func (s *Server) Router() http.Handler {
 	r := chi.NewRouter()
 
-	r.Get("/", s.homeRoute)
+	r.Get("/", HandleErrors(s.homeRoute))
 
 	return r
 }
 
-func (s *server) homeRoute(w http.ResponseWriter, r *http.Request) {
+func (s *Server) homeRoute(w http.ResponseWriter, r *http.Request) error {
 	w.Write([]byte("hello"))
+	return nil
 }
