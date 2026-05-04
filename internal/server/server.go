@@ -36,11 +36,22 @@ func (s *Server) Router() http.Handler {
 	r := chi.NewRouter()
 
 	r.Get("/", HandleErrors(s.homeRoute))
+	r.Get("/health", HandleErrors(s.healthRoute))
 
 	return r
 }
 
 func (s *Server) homeRoute(w http.ResponseWriter, r *http.Request) error {
 	w.Write([]byte("hello"))
+	return nil
+}
+
+func (s *Server) healthRoute(w http.ResponseWriter, r *http.Request) error {
+	err := s.DB.HealthCheck()
+	if err != nil {
+		return err
+	}
+
+	w.Write([]byte("server healthy"))
 	return nil
 }
