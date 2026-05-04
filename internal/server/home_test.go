@@ -12,6 +12,7 @@ import (
 func TestHomeRoute(t *testing.T) {
 	s := server.Server{
 		Port: 8080,
+		DB:   nil,
 	}
 
 	server := httptest.NewServer(s.Router())

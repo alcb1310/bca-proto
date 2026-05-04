@@ -4,15 +4,20 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/alcb1310/bca-proto/internal/database"
 	"github.com/go-chi/chi/v5"
 )
 
 type Server struct {
 	Port uint16
+	DB   database.Service
 }
 
-func New(port string) (http.Server, error) {
-	s := Server{}
+func New(port string, db database.Service) (http.Server, error) {
+	s := Server{
+		DB: db,
+	}
+
 	portInt, err := fmt.Sscanf(port, "%d", &s.Port)
 	if err != nil {
 		return http.Server{}, err
